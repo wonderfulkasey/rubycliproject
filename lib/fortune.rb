@@ -1,4 +1,4 @@
-module CriticalRole
+module fortune
 end
 
 require_relative '../config/environment'
