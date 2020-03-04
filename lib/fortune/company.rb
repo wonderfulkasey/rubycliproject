@@ -2,48 +2,25 @@ class Fortune::Company
 
   attr_accessor :name, :hq, :industry
 
-  @@all = []
-
-  def self.new_from_index_page(r)
-    self.new(
-      r.css("h2").text,
-      "https://fortune.com/best-companies/#{r.css("a").attribute("href").text}",
-      r.css("h3").text,
-      r.css(".position").text
-      )
+  def self.new
+    self.scrape_company
   end
 
-  def initialize(name=nil, url=nil, location=nil, position=nil)
-    @name = name
-    @hq = hq
-    @industry = industry
-    @@all << self
+  def self.scrape_company
+    company = []
+
+    company << self.scrape_fortune
   end
 
-  def self.all
-    @@all
-  end
+   def self.scrape_fortune
+    doc = Nokogiri::HTML(open("https://fortune.com/best-companies/"))
 
-  def self.find(id)
-    self.all[id-1]
-  end
+  
+    deal.name = doc.search("section.features h2").text.strip
+    deal.price = doc.search("button.buy-button").text.gsub("Buy it.", "").strip
+    deal.url = "https://fortune.com/best-companies/"
+    deal.availability = true
 
-  def name
-    @best_dish ||= doc.css("div.c-4.nr.nt ul:nth-child(8) li").text
-    # @best_dish ||= doc.xpath("//div[@class='c-4 nr nt']/ul[3]/li").text
-  end
-
-  def hq
-    @food_style ||= doc.css("div.c-4.nr.nt ul:nth-child(6) li").text
-    # @food_style ||= doc.xpath("//div[@class='c-4 nr nt']/ul[2]/li").text
-  end
-
-  def industry
-    @contact ||= doc.css("div.c-4.nr.nt ul:nth-child(10) li:nth-child(1)").text.split("+").join(". Tel: +")
-    # @contact ||= doc.xpath("//div[@class='c-4 nr nt']/ul[4]/li[1]").text.split("+").join(". Tel: +")
-  end
-
-  def doc
-    @doc ||= Nokogiri::HTML(open(self.url))
+    deal
   end
 end
