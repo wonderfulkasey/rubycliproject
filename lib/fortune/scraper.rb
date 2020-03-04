@@ -9,8 +9,8 @@ class Fortune::Scraper
   end
 
   def make_restaurants
-    scrape_restaurants_index.each do |r|
-      WorldsBestRestaurants::Restaurant.new_from_index_page(r)
+    scrape_fortune_index.each do |r|
+      Fortune::Company.new_from_index_page(r)
     end
   end
 end
