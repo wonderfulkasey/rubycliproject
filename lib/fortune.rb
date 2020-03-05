@@ -1,4 +1,4 @@
-module fortune
+module Fortune
 end
 
 require_relative '../config/environment'

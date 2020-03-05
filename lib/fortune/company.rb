@@ -16,10 +16,10 @@ class Fortune::Company
     doc = Nokogiri::HTML(open("https://fortune.com/best-companies/"))
 
   
-    deal.name = doc.search("section.features h2").text.strip
-    deal.price = doc.search("button.buy-button").text.gsub("Buy it.", "").strip
-    deal.url = "https://fortune.com/best-companies/"
-    deal.availability = true
+    company.name = doc.search("section.features h2").text.strip
+    company.hq = doc.search("button.buy-button").text.gsub("Buy it.", "").strip
+    company.industry = "https://fortune.com/best-companies/"
+    company.availability = true
 
     deal
   end
