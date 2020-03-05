@@ -17,10 +17,13 @@ class Fortune::Company
 
   
     company.name = doc.search("section.features h2").text.strip
-    company.hq = doc.search("button.buy-button").text.gsub("Buy it.", "").strip
-    company.industry = "https://fortune.com/best-companies/"
-    company.availability = true
 
-    deal
+    company.hq = doc.search("button.buy-button").text.gsub("Buy it.", "").strip
+
+    company.industry = doc.search (" ")
+
+    #company.availability = true
+
+    #deal
   end
 end
