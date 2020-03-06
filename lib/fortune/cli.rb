@@ -10,7 +10,7 @@ class Fortune::CLI
   def list_companies
     # here doc - http://blog.jayfields.com/2006/12/ruby-multiline-strings-here-doc-or.html
     puts "Top 10 Companies To Work For:"
-    @company = Fortune::company.today
+    @company = Fortune::Company.today
     @company.each.with_index(1) do |company, i|
       puts "#{i}. #{company.name} - #{company.hq} - #{company.industry}"
     end
