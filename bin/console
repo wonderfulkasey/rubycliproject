@@ -9,8 +9,8 @@ require "fortune"
 # with your gem easier. You can also use a different console, if you like.
 
 # (added pry)
-require "pry"
-Pry.start
+#require "pry"
+#Pry.start
 
 require "irb"
-IRB.start
+IRB.start(__FILE__)
