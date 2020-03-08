@@ -1,22 +1,17 @@
 class Fortune::CLI
 
   def call
-    list_companies
-    #maybe just list?
-    menu
+    welcome
+    search_company
     goodbye
   end
 
-  def list_companies
-    # here doc - http://blog.jayfields.com/2006/12/ruby-multiline-strings-here-doc-or.html
-    puts "Top 10 Companies To Work For:"
-    @company = Fortune::Company.today
-    @company.each.with_index(1) do |company, i|
-      puts "#{i}. #{company.name} - #{company.hq} - #{company.industry}"
-    end
+  def welcome
+    puts "Welcome to the Fortune 100 Companies!"
   end
 
-  def menu
+
+  def search_company
     input = nil
     while input != "exit"
       puts "Enter the number of the company you'd like to know more about or type list to see the options or type exit:"
