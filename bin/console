@@ -1,7 +1,5 @@
 #added as from wbr example
 
-$ bin/fortune
-
 require "bundler/setup"
 require "fortune"
 
