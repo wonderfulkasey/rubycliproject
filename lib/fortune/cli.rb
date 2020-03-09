@@ -1,34 +1,62 @@
 class Fortune::CLI
 
-  def call
+  def call 
     welcome
-    search_company
-    goodbye
+    search_companies
+    company_details
   end
-
-  def welcome
-    puts "Welcome to the Fortune 100 Companies!"
+  
+  def welcome 
+    puts "Welcome to an interactive list of the Top Ten Fortune 100 Companies! Let's find you a new job."
   end
+  
+  def search_companies
+    puts "Please enter 'yes' to learn more about your options."
 
+    #puts "or all the breweries in your zip code? Please type 'zip' or 'state'."
 
-  def search_company
-    input = nil
-    while input != "exit"
-      puts "Enter the number of the company you'd like to know more about or type list to see the options or type exit:"
-      input = gets.strip.downcase
-
-      if input.to_i > 0
-        the_deal = @company[input.to_i-1]
-        puts "#{company.name} - #{company.hq} - #{company.industry}"
-      elsif input == "list"
-        list_deals
-      else
-        puts "Not sure what you want to know - please type list or exit."
-      end
+    choice = gets.strip.downcase
+    
+    if choice == "yes"
+      puts "Please enter your 5-digit zipcode."
+      input = gets.strip.to_i
+      Fortune::API.companies_yes(input)
+      display_yes
+    else
+      puts "I'm sorry, I don't understand your input."
     end
   end
-
-  def goodbye
-    puts "See you soon!"
+    
+  def display_yes
+    puts ""
+    Fortune::Company.all.each.with_index(1) {|b, i| puts "#{i})" + " #{c.name}"}
+    puts ""
+    puts "Which brewery would you like to learn about? Please enter a number."
   end
-end
+  
+  def company_details
+    input = nil 
+    while input != "exit" 
+    puts "You can type 'start over' to search again or 'exit'."
+  
+    input = gets.strip.downcase
+      if input == "exit"
+        goodbye
+      elsif input.to_i > 0 && input.to_i <= Fortune::Company.all.length
+        Fortune::Company.display_details(input.to_i-1)
+        puts "Pick a new number from the list to learn about another brewery."
+      elsif input == "start over"
+        Fortune::Company.destroy_all
+        search_companies
+      else
+        puts "Not sure what you meant... Please pick a number from the list."
+      end
+     end
+  end
+  
+  def goodbye
+    Fortune::Company.destroy_all
+    puts "Thank you for stopping by!"
+  end
+  
+end  
