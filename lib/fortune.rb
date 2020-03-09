@@ -1,5 +1,5 @@
 require 'pry'
-require 'nokogiri'
+require 'httparty'
 
 require_relative 'fortune/version'
 require_relative 'fortune/cli'
