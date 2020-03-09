@@ -11,14 +11,14 @@ class Fortune::CLI
   end
   
   def search_companies
-    puts "Please enter 'yes' to learn more about your options."
+    puts "Are you ready to learn about current Top 10 companies?"
 
     #puts "or all the breweries in your zip code? Please type 'zip' or 'state'."
 
     choice = gets.strip.downcase
     
     if choice == "yes"
-      puts "Please enter your 5-digit zipcode."
+      puts "Great!"
       input = gets.strip.to_i
       Fortune::API.companies_yes(input)
       display_yes
@@ -31,7 +31,7 @@ class Fortune::CLI
     puts ""
     Fortune::Company.all.each.with_index(1) {|b, i| puts "#{i})" + " #{c.name}"}
     puts ""
-    puts "Which brewery would you like to learn about? Please enter a number."
+    puts "Which company would you like to learn about? Please enter a number."
   end
   
   def company_details
@@ -44,7 +44,7 @@ class Fortune::CLI
         goodbye
       elsif input.to_i > 0 && input.to_i <= Fortune::Company.all.length
         Fortune::Company.display_details(input.to_i-1)
-        puts "Pick a new number from the list to learn about another brewery."
+        puts "Pick a new number from the list to learn about another company."
       elsif input == "start over"
         Fortune::Company.destroy_all
         search_companies
