@@ -1,29 +1,31 @@
 class Fortune::Company
 
-  attr_accessor :name, :hq, :industry
-
-  def self.new
-    self.scrape_company
-  end
-
-  def self.scrape_company
-    company = []
-
-    company << self.scrape_fortune
-  end
-
-   def self.scrape_fortune
-    doc = Nokogiri::HTML(open("https://fortune.com/best-companies/"))
+attr_accessor :number, :name, :website_url 
 
   
-    company.name = doc.search("section.features h2").text.strip
-
-    company.hq = doc.search("button.buy-button").text.gsub("Buy it.", "").strip
-
-    company.industry = doc.search (" ")
-
-    #company.availability = true
-
-    #deal
+  @@all = []
+  
+  def initialize(hash)
+    hash.each {|k, v| self.send("#{k}=", v)}
+    @@all << self
   end
+  
+  def self.display_details(index)
+    c = self.all[index]
+    puts "---------------"
+    puts "That company is #{c.name}."
+    puts "Here are some details about #{c.name}:"
+    puts "Phone:" + " #{c.number}"
+    puts "Website:" + " #{c.website_url}"
+    puts "---------------"
+  end
+  
+  def self.all
+    @@all
+  end
+  
+  def self.destroy_all
+    @@all.clear
+  end
+    
 end
